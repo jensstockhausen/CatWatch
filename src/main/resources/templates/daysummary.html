@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+          crossorigin="anonymous"/>
+
+    <title>CatWatch</title>
+</head>
+<body>
+
+<div class="container">
+
+    <p th:text="'Date:' + ${date}">DATE</p>
+
+    <table class="table-sm table-striped">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Duration</th>
+            <th>Channel</th>
+        </tr>
+        </thead>
+
+        <tbody>
+            <tr th:each="feed : ${feeds}">
+
+                <td th:text="${feed.date}">date</td>
+                <td th:text="${feed.time}">time</td>
+                <td th:text="${feed.duration}">duration</td>
+                <td th:text="${feed.channel}">channel</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+</div>
+
+
+</body>
+</html>

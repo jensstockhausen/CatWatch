@@ -1,0 +1,11 @@
+*.class
+*.jar
+*.war
+
+.gradle
+/gradle
+.gradle/
+.idea/
+build/
+gradle/
+out/

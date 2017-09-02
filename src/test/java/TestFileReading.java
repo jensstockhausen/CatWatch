@@ -1,5 +1,4 @@
 import de.famst.BootApplication;
-import de.famst.activity.ActivityParser;
 import de.famst.persistance.FeedEntity;
 import de.famst.persistance.FeedRepository;
 import de.famst.persistance.LogParseInitializer;
@@ -61,7 +60,7 @@ public class TestFileReading
         logParseInitializer.startTailing(logFile.toPath());
         Thread.sleep(500);
 
-        List<FeedEntity> feedRepositoryByDate = feedRepository.findByDate(Date.valueOf("2017-08-05"));
+        List<FeedEntity> feedRepositoryByDate = feedRepository.findByDateOrderByTimeAsc(Date.valueOf("2017-08-05"));
         assertThat(feedRepositoryByDate.size(), is(1));
     }
 
@@ -89,7 +88,7 @@ public class TestFileReading
 
         Thread.sleep(500);
 
-        List<FeedEntity> feedRepositoryByDate = feedRepository.findByDate(Date.valueOf("2017-08-05"));
+        List<FeedEntity> feedRepositoryByDate = feedRepository.findByDateOrderByTimeAsc(Date.valueOf("2017-08-05"));
 
         feedRepositoryByDate.forEach( fe ->
             LOG.info("found: {}", fe.getSignature())

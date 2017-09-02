@@ -8,7 +8,9 @@ import java.util.List;
 
 public interface FeedRepository extends CrudRepository<FeedEntity, Long>
 {
-    List<FeedEntity> findByDate(Date date);
+    List<FeedEntity> findByDateOrderByTimeAsc(Date date);
+
+    List<FeedEntity> findByDateAndChannelOrderByTimeAsc(Date date, Integer channel);
 
     List<FeedEntity> findBySignature(String signature);
 }

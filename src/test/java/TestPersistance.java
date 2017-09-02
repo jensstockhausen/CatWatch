@@ -1,6 +1,4 @@
 import de.famst.BootApplication;
-import de.famst.activity.Activity;
-import de.famst.activity.Feed;
 import de.famst.persistance.FeedEntity;
 import de.famst.persistance.FeedRepository;
 import de.famst.persistance.FeedService;
@@ -46,7 +44,7 @@ public class TestPersistance
 
         feedRepository.save(feedEntity);
 
-        List<FeedEntity> byDate = feedRepository.findByDate(Date.valueOf("2017-08-05"));
+        List<FeedEntity> byDate = feedRepository.findByDateOrderByTimeAsc(Date.valueOf("2017-08-05"));
 
         assertThat(byDate.size(), is(1));
         assertThat(byDate.get(0).getDate(), is(Date.valueOf("2017-08-05")));
@@ -65,7 +63,7 @@ public class TestPersistance
         FeedEntity stored1 = feedService.appendFeed(feedEntity1);
         FeedEntity stored2 = feedService.appendFeed(feedEntity2);
 
-        List<FeedEntity> feedByDate = feedRepository.findByDate(Date.valueOf("2017-08-05"));
+        List<FeedEntity> feedByDate = feedRepository.findByDateOrderByTimeAsc(Date.valueOf("2017-08-05"));
 
         assertThat(stored1.getSignature(), is(stored2.getSignature()));
         assertThat(feedByDate.size(), is(1));

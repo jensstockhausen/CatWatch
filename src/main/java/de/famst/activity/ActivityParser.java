@@ -126,7 +126,11 @@ public class ActivityParser extends TailerListenerAdapter
                 msg.append(feed.duration());
 
                 feedHandler.handleFeed(feed);
-                graphHandler.drawFeed(feed);
+
+                if (graphHandler != null)
+                {
+                    graphHandler.drawFeed(feed);
+                }
 
                 currentState.remove(channel);
             }

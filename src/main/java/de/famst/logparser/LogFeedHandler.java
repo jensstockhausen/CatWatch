@@ -57,7 +57,6 @@ public class LogFeedHandler implements FeedHandler
         {
             e.printStackTrace();
         }
-
     }
 
 

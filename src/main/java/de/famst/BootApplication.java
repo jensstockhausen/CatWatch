@@ -7,15 +7,8 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 
 @SpringBootApplication
-public class BootApplication extends SpringBootServletInitializer
+public class BootApplication
 {
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application)
-    {
-        return application.sources(BootApplication.class);
-    }
-
-
     public static void main(String[] args)
     {
         SpringApplication.run(BootApplication.class, args);

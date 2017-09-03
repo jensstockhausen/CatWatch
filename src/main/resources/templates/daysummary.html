@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
     <link rel="stylesheet" href="/css/stickyfooter.css"/>
     <link rel="stylesheet" href="/css/userstyle.css"/>
 
@@ -13,82 +13,91 @@
 
 <div class="container">
 
-
-    <div class="container justify-content-left">
-        <div class="row">
-            <div class="col-3">
-                <p>Date:</p>
-            </div>
-
-            <div class="col-9">
-                <p th:text="${date}">DATE</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-3">
-                <p>Summary:</p>
-            </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-left">
+                Cat Watcher
+            </h3>
         </div>
     </div>
 
-    <table class="table-sm">
-        <thead>
-        <tr class="row justify-content-around">
-            <th class="col-3 text-center">Cat</th>
-            <th class="col-3 text-center">First</th>
-            <th class="col-3 text-center">Last</th>
-            <th class="col-3 text-center">Count</th>
-        </tr>
-        </thead>
+    <div class="row mt-2">
+        <div class="col-2">
+            <p>Date:</p>
+        </div>
 
-        <tbody>
+        <div class="col-10">
+            <p th:text="${date}">DATE</p>
+        </div>
+    </div>
 
-        <tr class="row justify-content-around" th:each="summary : ${summaries}">
-            <td class="col-3 text-center align-middle">
-                <img class="img-thumbnail" th:src="'/cat/' + ${summary.key}"/>
-            </td>
-            <td class="col-3 text-center align-middle" th:text="${summary.value.first}">FIRST</td>
-            <td class="col-3 text-center align-middle" th:text="${summary.value.last}">LAST</td>
-            <td class="col-3 text-center align-middle" th:text="${summary.value.count}">COUNT</td>
-        </tr>
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h3 class="text-left">
+                Summary
+            </h3>
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="col-md-12">
 
-        </tbody>
-    </table>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th class="h3">Cat</th>
+                    <th class="h3">First</th>
+                    <th class="h3">Last</th>
+                    <th class="h3">Count</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="summary : ${summaries}">
+                    <td>
+                        <img class="img-thumbnail border-0" th:src="'/cat/' + ${summary.key}"/>
+                    </td>
+                    <td class="h3" th:text="${summary.value.first}">FIRST</td>
+                    <td class="h3" th:text="${summary.value.last}">LAST</td>
+                    <td class="h3" th:text="${summary.value.count}">COUNT</td>
+                </tr>
+                </tbody>
+            </table>
 
+        </div>
+    </div>
 
-    <table class="table-sm table-striped">
-        <thead>
-        <tr class="row justify-content-around">
-            <th class="col-3 text-center">Date</th>
-            <th class="col-3 text-center">Time</th>
-            <th class="col-3 text-center">Duration[s]</th>
-            <th class="col-3 text-center">Cat</th>
-        </tr>
-        </thead>
+    <div class="row mt-5">
+        <div class="col-md-12">
 
-        <tbody>
-        <tr class="row justify-content-around" th:each="feed : ${feeds}">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th class="h3">Date</th>
+                    <th class="h3">Time</th>
+                    <th class="h3">Duration[s]</th>
+                    <th class="h3">Cat</th>
+                </tr>
+                </thead>
 
-            <td class="col-3 text-right align-middle" th:text="${feed.date}">date</td>
-            <td class="col-3 text-right align-middle" th:text="${feed.time}">time</td>
-            <td class="col-3 text-right align-right" th:text="${#numbers.formatDecimal(feed.duration,0,1)}">duration
-            </td>
-            <td class="col-3 text-center align-middle">
-                <img class="img-thumbnail" th:src="'/cat/' + ${feed.channel}"/>
-            </td>
-        </tr>
+                <tbody>
+                <tr th:each="feed : ${feeds}">
 
-        </tbody>
-    </table>
+                    <td class="h3" th:text="${feed.date}">date</td>
+                    <td class="h3" th:text="${feed.time}">time</td>
+                    <td class="h3 text-right" th:text="${#numbers.formatDecimal(feed.duration,0,1)}">
+                        duration
+                    </td>
+                    <td>
+                        <img class="img-thumbnail border-0" th:src="'/cat/' + ${feed.channel}"/>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
 
 </div>
-
-<footer class="footer">
-    <div class="container">
-        <a href="https://www.flaticon.com/packs/cat-set">Cat icons designed by Freepik from Flaticon</a>
-    </div>
-</footer>
-
 </body>
 </html>

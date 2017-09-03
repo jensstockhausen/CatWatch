@@ -10,6 +10,8 @@ public interface FeedRepository extends CrudRepository<FeedEntity, Long>
 {
     List<FeedEntity> findByDateOrderByTimeAsc(Date date);
 
+    List<FeedEntity> findByDateOrderByTimeDesc(Date date);
+
     List<FeedEntity> findByDateAndChannelOrderByTimeAsc(Date date, Integer channel);
 
     List<FeedEntity> findBySignature(String signature);

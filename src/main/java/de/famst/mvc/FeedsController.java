@@ -33,7 +33,7 @@ public class FeedsController
     public String dailyFeed(
         @PathVariable("date") String date, Model model)
     {
-        List<FeedEntity> feedByDate = feedRepository.findByDateOrderByTimeAsc(Date.valueOf(date));
+        List<FeedEntity> feedByDate = feedRepository.findByDateOrderByTimeDesc(Date.valueOf(date));
 
         model.addAttribute("date", date);
         model.addAttribute("feeds", feedByDate);

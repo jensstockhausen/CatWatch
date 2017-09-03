@@ -38,7 +38,7 @@ public class TestCatPics
     {
         MvcResult mvcResult = mockMvc.perform(get("/cat/2")).andReturn();
 
-        assertThat(mvcResult.getResponse().getStatus(), is(HttpStatus.OK));
-        assertThat(mvcResult.getResponse().getContentType(), is(MediaType.IMAGE_PNG));
+        assertThat(mvcResult.getResponse().getStatus(), is(HttpStatus.OK.value()));
+        assertThat(mvcResult.getResponse().getContentType(), is(MediaType.IMAGE_PNG_VALUE));
     }
 }

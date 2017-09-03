@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8"/>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/css/stickyfooter.css" />
-    <link rel="stylesheet" href="/css/userstyle.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/stickyfooter.css"/>
+    <link rel="stylesheet" href="/css/userstyle.css"/>
 
     <title>CatWatch</title>
 </head>
@@ -13,9 +13,48 @@
 
 <div class="container">
 
-    <div class="row">
-        <h3 class="col-6" th:text="'Date: ' + ${date}">DATE</h3>
+
+    <div class="container justify-content-left">
+        <div class="row">
+            <div class="col-3">
+                <p>Date:</p>
+            </div>
+
+            <div class="col-9">
+                <p th:text="${date}">DATE</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <p>Summary:</p>
+            </div>
+        </div>
     </div>
+
+    <table class="table-sm">
+        <thead>
+        <tr class="row justify-content-around">
+            <th class="col-3 text-center">Cat</th>
+            <th class="col-3 text-center">First</th>
+            <th class="col-3 text-center">Last</th>
+            <th class="col-3 text-center">Count</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr class="row justify-content-around" th:each="summary : ${summaries}">
+            <td class="col-3 text-center align-middle">
+                <img class="img-thumbnail" th:src="'/cat/' + ${summary.key}"/>
+            </td>
+            <td class="col-3 text-center align-middle" th:text="${summary.value.first}">FIRST</td>
+            <td class="col-3 text-center align-middle" th:text="${summary.value.last}">LAST</td>
+            <td class="col-3 text-center align-middle" th:text="${summary.value.count}">COUNT</td>
+        </tr>
+
+
+        </tbody>
+    </table>
 
 
     <table class="table-sm table-striped">
@@ -29,15 +68,16 @@
         </thead>
 
         <tbody>
-            <tr class="row justify-content-around" th:each="feed : ${feeds}">
+        <tr class="row justify-content-around" th:each="feed : ${feeds}">
 
-                <td class="col-3 text-right align-middle" th:text="${feed.date}">date</td>
-                <td class="col-3 text-right align-middle" th:text="${feed.time}">time</td>
-                <td class="col-3 text-right align-middle" th:text="${feed.duration}">duration</td>
-                <td class="col-3 text-center align-middle">
-                    <img class="img-thumbnail" th:src="'/cat/' + ${feed.channel}"/>
-                </td>
-            </tr>
+            <td class="col-3 text-right align-middle" th:text="${feed.date}">date</td>
+            <td class="col-3 text-right align-middle" th:text="${feed.time}">time</td>
+            <td class="col-3 text-right align-right" th:text="${#numbers.formatDecimal(feed.duration,0,1)}">duration
+            </td>
+            <td class="col-3 text-center align-middle">
+                <img class="img-thumbnail" th:src="'/cat/' + ${feed.channel}"/>
+            </td>
+        </tr>
 
         </tbody>
     </table>

@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8"/>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
-          crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/stickyfooter.css" />
+    <link rel="stylesheet" href="/css/userstyle.css" />
 
     <title>CatWatch</title>
 </head>
@@ -12,25 +13,30 @@
 
 <div class="container">
 
-    <p th:text="'Date: ' + ${date}">DATE</p>
+    <div class="row">
+        <h3 class="col-6" th:text="'Date: ' + ${date}">DATE</h3>
+    </div>
+
 
     <table class="table-sm table-striped">
         <thead>
-        <tr>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Duration</th>
-            <th>Channel</th>
+        <tr class="row justify-content-around">
+            <th class="col-3 text-center">Date</th>
+            <th class="col-3 text-center">Time</th>
+            <th class="col-3 text-center">Duration[s]</th>
+            <th class="col-3 text-center">Cat</th>
         </tr>
         </thead>
 
         <tbody>
-            <tr th:each="feed : ${feeds}">
+            <tr class="row justify-content-around" th:each="feed : ${feeds}">
 
-                <td th:text="${feed.date}">date</td>
-                <td th:text="${feed.time}">time</td>
-                <td th:text="${feed.duration}">duration</td>
-                <td th:text="${feed.channel}">channel</td>
+                <td class="col-3 text-right align-middle" th:text="${feed.date}">date</td>
+                <td class="col-3 text-right align-middle" th:text="${feed.time}">time</td>
+                <td class="col-3 text-right align-middle" th:text="${feed.duration}">duration</td>
+                <td class="col-3 text-center align-middle">
+                    <img class="img-thumbnail" th:src="'/cat/' + ${feed.channel}"/>
+                </td>
             </tr>
 
         </tbody>
@@ -38,6 +44,11 @@
 
 </div>
 
+<footer class="footer">
+    <div class="container">
+        <a href="https://www.flaticon.com/packs/cat-set">Cat icons designed by Freepik from Flaticon</a>
+    </div>
+</footer>
 
 </body>
 </html>

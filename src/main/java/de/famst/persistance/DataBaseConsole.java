@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DataBaseConsole
 {
+
     @Bean
     ServletRegistrationBean h2servletRegistration()
     {
@@ -15,4 +16,5 @@ public class DataBaseConsole
         registrationBean.addUrlMappings("/console/*");
         return registrationBean;
     }
+
 }

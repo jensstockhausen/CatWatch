@@ -58,7 +58,6 @@ public class TestMVC
         List<FeedEntity> feeds = (List<FeedEntity>)modelAndView.getModel().get("feeds");
 
         assertThat(feeds.size(), is(5));
-
     }
 
 

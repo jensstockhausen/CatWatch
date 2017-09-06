@@ -29,7 +29,7 @@ public class TestActivity
             {"2012-12-08 15:12:33.336 asdf a",
                 "2012-12-08 15:12:33.336", Activity.OPERATION.OTHER, null, false},
             {"2012-12-08 15:12:33.336 started 0",
-                "2012-12-08 15:12:33.336", Activity.OPERATION.OTHER, 0, true},
+                "2012-12-08 15:12:33.336", Activity.OPERATION.STARTING, 0, true},
             {"  ",
                 "", null, null, false},
 

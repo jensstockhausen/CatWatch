@@ -14,6 +14,7 @@ public class Activity
     {
         OPENING,
         CLOSING,
+        STARTING,
         OTHER;
     }
 
@@ -45,7 +46,11 @@ public class Activity
             } else if (parts[2].equals("closing"))
             {
                 operation = OPERATION.CLOSING;
-            } else
+            } else if (parts[2].equals("started"))
+            {
+                operation = OPERATION.STARTING;
+            }
+            else
             {
                 operation = OPERATION.OTHER;
             }

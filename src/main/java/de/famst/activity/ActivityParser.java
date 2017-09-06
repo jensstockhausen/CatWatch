@@ -73,8 +73,20 @@ public class ActivityParser extends TailerListenerAdapter
         {
             msg.append(" INVALID");
             LOG.info(msg.toString());
+
             return;
         }
+
+        if (activity.getOperation().equals(Activity.OPERATION.STARTING))
+        {
+            msg.append(" [was STARTING] ");
+            LOG.info(msg.toString());
+            // reset states
+            this.currentState = new HashMap<>();
+
+            return;
+        }
+
 
         if (graphHandler != null)
         {

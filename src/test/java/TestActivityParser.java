@@ -9,6 +9,7 @@ import org.mockito.Mockito;
 import java.util.Arrays;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 public class TestActivityParser
@@ -43,7 +44,7 @@ public class TestActivityParser
             "2017-08-05 20:24:34.336 closing 4"
         };
 
-        process(lines, 0, 1 );
+        process(lines, 0, 1);
     }
 
     @Test
@@ -55,7 +56,7 @@ public class TestActivityParser
             "2017-08-05 20:24:34.336 closing 4"
         };
 
-        process(lines, 1, 2 );
+        process(lines, 1, 2);
     }
 
     @Test
@@ -67,7 +68,7 @@ public class TestActivityParser
             "2017-08-05 20:24:34.336 closing 4"
         };
 
-        process(lines, 1, 2 );
+        process(lines, 1, 2);
     }
 
     @Test
@@ -80,7 +81,7 @@ public class TestActivityParser
             "2017-08-05 20:26:34.336 closing 4"
         };
 
-        process(lines, 2, 3 );
+        process(lines, 2, 3);
     }
 
     @Test
@@ -92,7 +93,7 @@ public class TestActivityParser
             "2017-08-05 20:24:36.336 closing 4"
         };
 
-        process(lines, 0, 1 );
+        process(lines, 0, 1);
     }
 
 
@@ -105,7 +106,7 @@ public class TestActivityParser
             "2017-08-05 20:24:36.336 closing 4"
         };
 
-        process(lines, 0, 2 );
+        process(lines, 0, 2);
     }
 
     @Test
@@ -117,9 +118,27 @@ public class TestActivityParser
             "2017-08-05 20:26:36.336 closing 4"
         };
 
-        process(lines, 1, 2 );
+        process(lines, 1, 2);
     }
 
+    @Test
+    public void closeAfterOpenIsIgnored() throws Exception
+    {
+        String[] lines = {
+            "2017-09-04 04:45:30.306 opening 5",
+            "2017-08-05 19:38:18.772 started 0",
+            "2017-08-05 19:38:18.799 closing 2",
+            "2017-08-05 20:04:05.591 closing 5"
+        };
 
+        FeedHandler feedHandler = mock(FeedHandler.class);
+        ActivityParser ap = new ActivityParser(feedHandler, true);
 
+        Arrays.stream(lines).forEach(line ->
+            ap.handle(line)
+        );
+
+        Mockito.verify(feedHandler, never()).handleFeed(
+            Matchers.any(Feed.class));
+    }
 }

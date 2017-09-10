@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +40,7 @@ public class FeedsController
         List<FeedEntity> feedByDate = feedRepository.findByDateOrderByTimeDesc(Date.valueOf(date));
 
         mapFeedsToModel(date, feedByDate, model);
+        addNextPrevDay(date, model);
 
         return "daysummary";
     }
@@ -52,12 +55,27 @@ public class FeedsController
         model.addAttribute("date", date);
         model.addAttribute("feeds", feedByDate);
 
+        addNextPrevDay(date, model);
+
         Map<String, Map<String, String>> summaries = new HashMap<>();
         summaries.put(String.valueOf(channel), mapChannelToModel(date, channel));
 
         model.addAttribute("summaries", summaries);
 
         return "daysummary";
+    }
+
+    private void addNextPrevDay(@PathVariable("date") String date, Model model)
+    {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        LocalDate localDate = Date.valueOf(date).toLocalDate();
+
+        String prevDay = localDate.minusDays(1).format(formatter);
+        String nextDay = localDate.plusDays(1).format(formatter);
+
+        model.addAttribute("nextday", nextDay);
+        model.addAttribute("prevday", prevDay);
     }
 
 

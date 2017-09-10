@@ -13,23 +13,14 @@
 
 <div class="container">
 
-    <div class="row">
-        <div class="col-md-12">
-            <h3 class="text-left">
-                Cat Watcher
-            </h3>
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="navbar-brand h1">Cat Watch</div>
+        <div class="nav">
+            <div class="nav-item mr-auto"></div>
+            <div class="nav-item px-2">Date: </div>
+            <div class="nav-item" th:text="${date}">DATE</div>
         </div>
-    </div>
-
-    <div class="row mt-2">
-        <div class="col-2">
-            <p>Date:</p>
-        </div>
-
-        <div class="col-10">
-            <p th:text="${date}">DATE</p>
-        </div>
-    </div>
+    </nav>
 
     <div class="row mt-5">
         <div class="col-md-12">
@@ -54,11 +45,22 @@
                 <tbody>
                 <tr th:each="summary : ${summaries}">
                     <td>
-                        <img class="img-thumbnail border-0" th:src="'/cat/' + ${summary.key}"/>
+                        <a th:href="@{'/dailyfeeds/'+${date}+'/'+${summary.key}}">
+                            <img class="img-thumbnail border-0" th:src="'/cat/' + ${summary.key}"/>
+                        </a>
                     </td>
                     <td class="h3" th:text="${summary.value.first}">FIRST</td>
                     <td class="h3" th:text="${summary.value.last}">LAST</td>
-                    <td class="h3" th:text="${summary.value.count}">COUNT</td>
+                    <td class="h3">
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar"
+                                 th:attr="aria-valuenow=${summary.value.count},style='height: 2rem; width: ' + ${summary.value.progress}"
+                                 style=""
+                                 aria-valuenow="${summary.value.count}" aria-valuemin="0" aria-valuemax="30">
+                            </div>
+                        </div>
+                        <div th:text="${summary.value.count}" class="progressText h4">progresstext</div>
+                    </td>
                 </tr>
                 </tbody>
             </table>

@@ -7,3 +7,9 @@ font-size: 1rem;
 .img-thumbnail {
     max-width: 4rem;
 }
+
+.progressText {
+    float: right;
+    text-align: right;
+    vertical-align: middle;
+}

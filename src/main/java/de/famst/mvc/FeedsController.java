@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.Math.round;
+
 @Controller
 public class FeedsController
 {
@@ -35,41 +37,10 @@ public class FeedsController
     {
         List<FeedEntity> feedByDate = feedRepository.findByDateOrderByTimeDesc(Date.valueOf(date));
 
-        model.addAttribute("date", date);
-        model.addAttribute("feeds", feedByDate);
-
-        Map<String, Map<String, String>> summaries = new HashMap<>();
-
-        for (int c = 2; c < 6; c++)
-        {
-            Map<String, String> summary = new HashMap<>();
-
-            List<FeedEntity> feedByDateChannel = feedRepository.findByDateAndChannelOrderByTimeAsc(Date.valueOf(date), c);
-
-            if (feedByDateChannel.size() != 0)
-            {
-                String first = feedByDateChannel.get(0).getTime().toString();
-                String last = feedByDateChannel.get(feedByDateChannel.size() - 1).getTime().toString();
-                String count = String.format("%3d", feedByDateChannel.size());
-
-                summary.put("first", first);
-                summary.put("last", last);
-                summary.put("count", count);
-            } else
-            {
-                summary.put("first", "");
-                summary.put("last", "");
-                summary.put("count", "0");
-            }
-
-            summaries.put(String.valueOf(c), summary);
-        }
-
-        model.addAttribute("summaries", summaries);
+        mapFeedsToModel(date, feedByDate, model);
 
         return "daysummary";
     }
-
 
     @RequestMapping("/dailyfeeds/{date}/{channel}")
     public String dailyFeedChannel(
@@ -81,8 +52,91 @@ public class FeedsController
         model.addAttribute("date", date);
         model.addAttribute("feeds", feedByDate);
 
+        Map<String, Map<String, String>> summaries = new HashMap<>();
+        summaries.put(String.valueOf(channel), mapChannelToModel(date, channel));
+
+        model.addAttribute("summaries", summaries);
+
         return "daysummary";
     }
+
+
+    private void mapFeedsToModel(String date, List<FeedEntity> feedByDate, Model model)
+    {
+        model.addAttribute("date", date);
+        model.addAttribute("feeds", feedByDate);
+
+        Map<String, Map<String, String>> summaries = new HashMap<>();
+
+        for (int c = 2; c < 6; c++)
+        {
+            summaries.put(String.valueOf(c), mapChannelToModel(date, c));
+        }
+
+        model.addAttribute("summaries", summaries);
+    }
+
+    private Map<String, String>  mapChannelToModel(String date, int channel)
+    {
+        Map<String, String> summary = new HashMap<>();
+
+        List<FeedEntity> feedByDateChannel = feedRepository.findByDateAndChannelOrderByTimeAsc(Date.valueOf(date), channel);
+        int count = feedByDateChannel.size();
+
+        if (count != 0)
+        {
+            String first = feedByDateChannel.get(0).getTime().toString();
+            String last = feedByDateChannel.get(count - 1).getTime().toString();
+
+            String progess = String.format("%d%%", (int) (round((float) count / 30.0f * 100.0f)));
+
+            summary.put("first", first);
+            summary.put("last", last);
+            summary.put("count", String.valueOf(count));
+            summary.put("progress", progess);
+        } else
+        {
+            summary.put("first", "");
+            summary.put("last", "");
+            summary.put("count", "0");
+            summary.put("progress", "0%");
+        }
+
+        return summary;
+
+    }
+
+
+    /**
+     *  for statistics:
+     *
+     SELECT ROUND(duration, -2)    AS bucket,
+     COUNT(*)                    AS COUNT,
+     RPAD('', LN(COUNT(*)), '*') AS bar
+     FROM   feed_entity
+     GROUP  BY bucket
+     order by bucket;
+     *
+     *
+     SELECT floor(duration/60)*60    AS bucket,
+     COUNT(*)                    AS COUNT,
+     RPAD('', LN(COUNT(*)), '*') AS bar
+     FROM   feed_entity
+     //where channel = 3 and date = '2017-09-05'
+     GROUP  BY bucket
+     order by bucket;
+     *
+     *
+     *
+     SELECT HOUR(TIME)    AS bucket,
+     COUNT(*)                    AS COUNT,
+     RPAD('',(COUNT(*)/10), '*') AS bar
+     FROM   feed_entity
+     GROUP  BY bucket
+     order by bucket;
+     *
+     *
+     */
 
 
 }

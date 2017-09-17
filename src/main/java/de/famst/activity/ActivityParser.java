@@ -131,20 +131,28 @@ public class ActivityParser extends TailerListenerAdapter
             if (currentState.containsKey(activity.getChannel()))
             {
                 Integer channel = activity.getChannel();
+                Activity openActivity = currentState.get(channel);
 
-                Feed feed = new Feed(currentState.get(channel), activity);
-
-                msg.append(" duration ");
-                msg.append(feed.duration());
-
-                feedHandler.handleFeed(feed);
-
-                if (graphHandler != null)
+                if (openActivity.getTimestamp().before(activity.getTimestamp()))
                 {
-                    graphHandler.drawFeed(feed);
-                }
+                    Feed feed = new Feed(openActivity, activity);
 
-                currentState.remove(channel);
+                    msg.append(" duration ");
+                    msg.append(feed.duration());
+
+                    feedHandler.handleFeed(feed);
+
+                    if (graphHandler != null)
+                    {
+                        graphHandler.drawFeed(feed);
+                    }
+
+                    currentState.remove(channel);
+                }
+                else
+                {
+                    msg.append(" close before open");
+                }
             }
         }
 

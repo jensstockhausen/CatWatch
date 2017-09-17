@@ -141,4 +141,24 @@ public class TestActivityParser
         Mockito.verify(feedHandler, never()).handleFeed(
             Matchers.any(Feed.class));
     }
+
+    @Test
+    public void oldCLoseAreIgnored() throws Exception
+    {
+        String[] lines = {
+            "2017-08-04 04:45:30.306 opening 5",
+            "2017-08-04 03:04:05.591 closing 5",
+            "2017-08-04 19:38:18.799 closing 2",
+            "2017-08-04 20:04:05.591 closing 5"
+        };
+
+        FeedHandler feedHandler = mock(FeedHandler.class);
+        ActivityParser ap = new ActivityParser(feedHandler, true);
+
+        Arrays.stream(lines).forEach(line ->
+            ap.handle(line)
+        );
+
+        process(lines, 0, 3);
+    }
 }

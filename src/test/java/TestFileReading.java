@@ -58,7 +58,7 @@ public class TestFileReading
     public void logFileIsRead() throws Exception
     {
         logParseInitializer.startTailing(logFile.toPath());
-        Thread.sleep(500);
+        Thread.sleep(1000);
 
         List<FeedEntity> feedRepositoryByDate = feedRepository.findByDateOrderByTimeAsc(Date.valueOf("2017-08-05"));
         assertThat(feedRepositoryByDate.size(), is(1));

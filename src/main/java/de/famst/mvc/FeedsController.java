@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +48,7 @@ public class FeedsController
         @PathVariable("date") String date,
         @PathVariable("channel") Integer channel, Model model)
     {
-        List<FeedEntity> feedByDate = feedRepository.findByDateAndChannelOrderByTimeAsc(Date.valueOf(date), channel);
+        List<FeedEntity> feedByDate = feedRepository.findByDateAndChannelOrderByTimeDesc(Date.valueOf(date), channel);
 
         model.addAttribute("date", date);
         model.addAttribute("feeds", feedByDate);
@@ -98,13 +96,13 @@ public class FeedsController
     {
         Map<String, String> summary = new HashMap<>();
 
-        List<FeedEntity> feedByDateChannel = feedRepository.findByDateAndChannelOrderByTimeAsc(Date.valueOf(date), channel);
+        List<FeedEntity> feedByDateChannel = feedRepository.findByDateAndChannelOrderByTimeDesc(Date.valueOf(date), channel);
         int count = feedByDateChannel.size();
 
         if (count != 0)
         {
-            String first = feedByDateChannel.get(0).getTime().toString();
-            String last = feedByDateChannel.get(count - 1).getTime().toString();
+            String last = feedByDateChannel.get(0).getTime().toString();
+            String first = feedByDateChannel.get(count - 1).getTime().toString();
 
             String progess = String.format("%d%%", (int) (round((float) count / 30.0f * 100.0f)));
 

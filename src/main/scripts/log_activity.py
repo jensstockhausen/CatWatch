@@ -2,6 +2,7 @@
 
 import RPi.GPIO as GPIO
 import time as time
+from datetime import datetime
 
 GPIO.setmode(GPIO.BCM)
 
@@ -20,9 +21,10 @@ GPIO.setup(CHANNEL_3, GPIO.IN)
 def write_log(channel, action):
     # expecting:
     # 2017-08-05 20:24:33.336 opening 4
-    msg = time.strftime('%Y-%m-%d %H:%M:%S.%f')
+    
+    msg = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
     msg += " " + action
-    msg += " " + channel
+    msg += " " + str(channel)
     print msg
 
 

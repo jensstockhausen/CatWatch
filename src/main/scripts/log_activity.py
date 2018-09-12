@@ -27,23 +27,25 @@ def write_log(channel, action):
     msg += " " + str(channel)
     print msg
 
+    log = open("./log/activity.log","a")
+    log.write("%s\r\n" % msg)
+    log.close()
+
 
 # write activity to log file
 def handle_activity(channel):
-    if GPIO.input(channel):
+    if not GPIO.input(channel):
         write_log(channel, "opening")
-        print "Rising edge detected on 25"
     else:
         write_log(channel, "closing")
-        print "Falling edge detected on 25"
 
 
 write_log(0, "started")
 
-GPIO.add_event_detect(CHANNEL_0, GPIO.BOTH, callback=handle_activity, bouncetime=500)
-GPIO.add_event_detect(CHANNEL_1, GPIO.BOTH, callback=handle_activity, bouncetime=500)
-GPIO.add_event_detect(CHANNEL_2, GPIO.BOTH, callback=handle_activity, bouncetime=500)
-GPIO.add_event_detect(CHANNEL_3, GPIO.BOTH, callback=handle_activity, bouncetime=500)
+GPIO.add_event_detect(CHANNEL_0, GPIO.BOTH, callback=handle_activity, bouncetime=1000)
+GPIO.add_event_detect(CHANNEL_1, GPIO.BOTH, callback=handle_activity, bouncetime=1000)
+GPIO.add_event_detect(CHANNEL_2, GPIO.BOTH, callback=handle_activity, bouncetime=1000)
+GPIO.add_event_detect(CHANNEL_3, GPIO.BOTH, callback=handle_activity, bouncetime=1000)
 
 while True:
     time.sleep(1e6)

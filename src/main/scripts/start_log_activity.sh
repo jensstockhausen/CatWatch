@@ -1,5 +1,7 @@
 #!/bin/bash
-cd "${dirname "$0"}"
+BASEDIR=$(dirname "$0")
+echo "$BASEDIR"
+cd $BASEDIR
 
 printf "running in $PWD\n"
 

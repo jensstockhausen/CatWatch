@@ -1,2 +1,2 @@
 */5 * * * *  /usr/bin/sudo -H /home/pi/scripts/keep_wifi_connected.sh >> /dev/null 2>&1
-0 1 * * * /home/pi/scripts/do_logrotate.sh >> /dev/null 2>&1
+0 1 * * * /home/pi/scripts/do_logrotate.sh >> /home/pi/scripts/log/logrotate.log 2>&1
